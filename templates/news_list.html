@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load imagekit %}
+
+{% block title %}Notícias - {% endblock %}
+
+{% block header %}
+<section class="section-highlight">
+  <div class="w-container container header-page">
+    <h1 class="white">Notícias</h1>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="section-content" id="news">
+  <div class="w-container container content">
+    <div class="w-row" id="page-list">
+      {% for n in news %}
+        <div class="w-col w-col-4 column">
+          <a href="{% url 'detail' n.slug %}">
+            <div class="newslist-block">
+              <div class="w-clearfix news-list news">
+                <h3 class="h3-news">{{ n.title }}</h3>
+                <p class="quote">{{ n.updated_date|date:"d/m/Y" }}</p>
+              </div>
+              <span class="w-clearfix w-inline-block button-expandable">
+                <div class="mask-button"></div>
+                <div class="text-button small">Ler notícia</div>
+              </span>
+            </div>
+          </a>
+        </div>
+
+      {% endfor %}
+    </div>
+    {% if news|length > 9 %}
+      <a class="button news" href="/noticias/page/" data-paginator="0" id="read-more">mais notícias</a>
+    {% endif %}
+
+
+    <div class="row-spacer">
+      <div class="navigators" style="{% if news.paginator.num_pages == 1 %}display:none{% endif %}">
+        {% if news.has_next %}
+        <a href="?page={{ news.next_page_number }}" class="arrow next"></a>
+        {% endif %}
+        <ul class="pagination-nums">
+          {% for page in news.paginator.page_range %}
+          <li><a href="?page={{ page }}" class="{% if page == news.number %}active{% endif %}">{{ page }}</a></li>
+          {% endfor %}
+        </ul>
+        {% if news.has_previous %}
+        <a href="?page={{ news.previous_page_number }}" class="arrow previous"></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+
+
+
+

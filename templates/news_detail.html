@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load imagekit %}
+
+{% block title %}{{ news.title }} - {% endblock %}
+
+
+
+{% block header %}
+<section class="section-highlight">
+  <div class="w-container container header-page">
+    <h1 class="white">Notícias</h1>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+  <section class="section-content" id="news">
+    <div class="w-container container content">
+      <h2 class="news-title">{{ news.title|upper }}</h2>
+      <p class="quote">{{ news.updated_date|date:"d/m/Y" }}</p>
+      <div class="news-content">
+        {% if news.image %}
+          <img class="img-news" src="{{ MEDIA_URL }}{{ news.image }}" alt="{{ news.title  }}">
+        {% else %}
+
+        {% endif %}
+
+        {{ news.text|safe }}
+      </div><a class="button" href="/noticias/">outras notícias</a>
+    </div>
+  </section>
+
+
+
+{% endblock %}
